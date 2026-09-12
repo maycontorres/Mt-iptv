@@ -28,16 +28,16 @@ jobs:
 
       - name: Unpack MT IPTV project
         run: |
-          unzip -q MT_IPTV_v2_for_github.zip -d project
-          test -f project/MT_IPTV/settings.gradle
+          unzip -q MT_IPTV_v5_final_landscape.zip -d project
+          test -f project/MT_IPTV_V5/settings.gradle
 
       - name: Build APK
-        working-directory: project/MT_IPTV
+        working-directory: project/MT_IPTV_V5
         run: gradle :app:assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MT-IPTV-APK
-          path: project/MT_IPTV/app/build/outputs/apk/debug/*.apk
+          path: project/MT_IPTV_V5/app/build/outputs/apk/debug/*.apk
           retention-days: 7
