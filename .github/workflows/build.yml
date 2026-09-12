@@ -28,7 +28,7 @@ jobs:
 
       - name: Unpack MT IPTV project
         run: |
-          unzip -q MT_IPTV_v1_project-1.zip -d project
+          unzip -q MT_IPTV_v2_for_github.zip -d project
           test -f project/MT_IPTV/settings.gradle
 
       - name: Build APK
