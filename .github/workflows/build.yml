@@ -1,4 +1,4 @@
-name: Build AUREON V32 APK
+name: Build AUREON V33
 
 on:
   push:
@@ -19,22 +19,27 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Unpack AUREON V32 project
+      - name: Unpack AUREON V33
         run: |
           rm -rf project
           mkdir project
-          unzip -q AUREON_V32_otimizado_completo.zip -d project
-          test -f project/AUREON_V32/settings.gradle
+          unzip -q AUREON_V33_producao_segura.zip -d project
+          test -f project/AUREON_V33/settings.gradle
 
-      - name: Build APK
-        working-directory: project/AUREON_V32
+      - name: Build V33
+        working-directory: project/AUREON_V33
         run: |
           chmod +x gradlew
-          ./gradlew :app:assembleDebug --stacktrace
+          ./gradlew \
+            :app:assembleSecureDebug \
+            :app:assembleCompatDebug \
+            :app:assembleSecureRelease \
+            :app:assembleCompatRelease \
+            --stacktrace
 
-      - name: Upload APK
+      - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: AUREON-V32-APK
-          path: project/AUREON_V32/app/build/outputs/apk/debug/*.apk
+          name: AUREON-V33-APKs
+          path: project/AUREON_V33/app/build/outputs/apk/**/*.apk
           retention-days: 7
