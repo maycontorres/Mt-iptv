@@ -1,14 +1,13 @@
-name: Build MT IPTV APK
+name: Build AUREON V32 APK
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
 
     steps:
       - name: Checkout
@@ -20,24 +19,22 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Download Gradle
+      - name: Unpack AUREON V32 project
         run: |
-          curl -fsSL https://services.gradle.org/distributions/gradle-8.10.2-bin.zip -o /tmp/gradle.zip
-          unzip -q /tmp/gradle.zip -d /opt
-          echo "/opt/gradle-8.10.2/bin" >> "$GITHUB_PATH"
-
-      - name: Unpack MT IPTV project
-        run: |
-          unzip -q MT_IPTV_v5_final_landscape.zip -d project
-          test -f project/MT_IPTV_V5/settings.gradle
+          rm -rf project
+          mkdir project
+          unzip -q AUREON_V32_otimizado_completo.zip -d project
+          test -f project/AUREON_V32/settings.gradle
 
       - name: Build APK
-        working-directory: project/MT_IPTV_V5
-        run: gradle :app:assembleDebug --stacktrace
+        working-directory: project/AUREON_V32
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MT-IPTV-APK
-          path: project/MT_IPTV_V5/app/build/outputs/apk/debug/*.apk
+          name: AUREON-V32-APK
+          path: project/AUREON_V32/app/build/outputs/apk/debug/*.apk
           retention-days: 7
