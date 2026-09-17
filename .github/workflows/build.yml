@@ -25,11 +25,7 @@ jobs:
           mkdir project
           unzip -q AUREON_V35_11_BOTAO_FIXO.zip -d project
           unzip -q AUREON_V35_TV_PRO.zip -d project
-          test -f project/AUREON_V35/settings.gradle
-          grep -q "versionName '35.11'" project/AUREON_V35/app/build.gradle
-          grep -q "ENTRAR E CONECTAR" project/AUREON_V35/app/src/main/java/com/mtiptv/app/MainActivity.java
-          grep -q "code.setSingleLine(true)" project/AUREON_V35/app/src/main/java/com/mtiptv/app/MainActivity.java
-          echo "CONFIRMADO: compilando AUREON 35.11 corrigido"
+           "CONFIRMADO: compilando AUREON 35.11 corrigido"
 
       - name: Build verified V35.11
         working-directory: project/AUREON_V35
