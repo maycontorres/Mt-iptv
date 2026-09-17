@@ -1,4 +1,4 @@
-name: Build AUREON V35.11 corrigido
+name: unzip -q AUREON_V35_11_BOTAO_FIXO.zip -d project
 
 on:
   push:
