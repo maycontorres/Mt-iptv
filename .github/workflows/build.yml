@@ -1,40 +1,4 @@
-name: Build AUREON V35.11
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Java 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Unpack AUREON V35.11
-        run: |
-          rm -rf project
-          mkdir project
-          unzip -q AUREON_V35_11_BOTAO_FIXO.zip -d project
-
-      - name: Build AUREON V35.11
-        working-directory: project/AUREON_V35
-        run: |
-          chmod +x gradlew
-          ./gradlew :app:assembleSecureDebug :app:assembleCompatDebug --stacktrace
-
-      - name: Upload APKs
-        uses: actions/upload-artifact@v4
-        with:
+{"name":"Build AUREON V35.11","on":{"push":{"branches":["main"]},"workflow_dispatch":{}},"jobs":{"build":{"runs-on":"ubuntu-latest","steps":[{"name":"Checkout","uses":"actions/checkout@v4"},{"name":"Set up Java 17","uses":"actions/setup-java@v4","with":{"distribution":"temurin","java-version":"17"}},{"name":"Unpack AUREON V35.11","run":"rm -rf project\nmkdir project\nunzip -q AUREON_V35_11_BOTAO_FIXO.zip -d project"},{"name":"Build AUREON V35.11","working-directory":"project/AUREON_V35","run":"chmod +x gradlew\n./gradlew :app:assembleSecureDebug :app:assembleCompatDebug --stacktrace"},{"name":"Upload APKs","uses":"actions/upload-artifact@v4","with":{"name":"AUREON-V35-11-CORRIGIDO","path":"project/AUREON_V35/app/build/outputs/apk/**/*debug.apk","retention-days":7,"if-no-files-found":"error"}}]}}}        with:
           name: AUREON-V35-11-CORRIGIDO
           path: project/AUREON_V35/app/build/outputs/apk/**/*debug.apk
           retention-days: 7
