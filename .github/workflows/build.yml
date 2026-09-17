@@ -19,10 +19,11 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Unpack and verify AUREON V35.11
+      -       - name: Unpack AUREON V35.11
         run: |
           rm -rf project
           mkdir project
+          unzip -q AUREON_V35_11_BOTAO_FIXO.zip -d project
           unzip -q AUREON_V35_TV_PRO.zip -d project
           test -f project/AUREON_V35/settings.gradle
           grep -q "versionName '35.11'" project/AUREON_V35/app/build.gradle
