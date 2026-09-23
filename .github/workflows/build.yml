@@ -3,7 +3,8 @@ name: Build AUREON V35.19
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -20,11 +21,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      -
-- name: Configure Android SDK
-  run: |
-    echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
-    "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --version
+      - name: Check Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --version
 
       - name: Unpack AUREON V35.19
         run: |
@@ -34,6 +34,14 @@ jobs:
       - name: Build APK
         working-directory: project
         run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AUREON-V35.19-APK
+          path: project/app/build/outputs/apk/debug/*.apk
           chmod +x gradlew
           ./gradlew assembleDebug
 
