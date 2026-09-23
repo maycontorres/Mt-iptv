@@ -26,14 +26,46 @@ jobs:
           echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
           "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --version
 
-      - name: Unpack AUREON V35.19
+      - name: Find and unpack AUREON
         run: |
-          unzip -q AUREON_V35_19_CINEMA_VLC.zip -d project
+          ZIP_FILE=$(find . -maxdepth 1 -type f -name 'AUREON_V35_19_CINEMA_VLC*.zip' -print -quit)
+          if [ -z "$ZIP_FILE" ]; then
+            echo "ERROR: AUREON ZIP not found"
+            exit 1
+          fi
+          mkdir -p project
+          unzip -q "$ZIP_FILE" -d project
+          echo "Project files:"
           ls -la project
 
-      - name: Build APK
-        working-directory: project
+      - name: Find Gradle project
         run: |
+          GRADLE_FILE=$(find project -name gradlew -type f -print -quit)
+          if [ -z "$GRADLE_FILE" ]; then
+            echo "ERROR: gradlew not found"
+            exit 1
+          fi
+          GRADLE_DIR=$(dirname "$GRADLE_FILE")
+          echo "GRADLE_DIR=$GRADLE_DIR" >> "$GITHUB_ENV"
+
+      - name: Build APK
+        run: |
+          cd "$GRADLE_DIR"
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+
+      - name: Locate APK
+        run: |
+          echo "Searching for APK files:"
+          find project -type f -name "*.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AUREON-V35.19-APK
+          path: project/**/*.apk
+          if-no-files-found: error
+          retention-days: 30
           chmod +x gradlew
           ./gradlew assembleDebug
 
