@@ -42,11 +42,3 @@ jobs:
         with:
           name: AUREON-V35.19-APK
           path: project/app/build/outputs/apk/debug/*.apk
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: AUREON-V35.19-APK
-          path: project/app/build/outputs/apk/debug/*.apk
