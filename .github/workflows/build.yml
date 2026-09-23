@@ -66,11 +66,3 @@ jobs:
           path: project/**/*.apk
           if-no-files-found: error
           retention-days: 30
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: AUREON-V35.19-APK
-          path: project/app/build/outputs/apk/debug/*.apk
