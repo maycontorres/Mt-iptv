@@ -1,6 +1,5 @@
 
-name: Build AUREON V35.19
-
+name: AUREON_V35_20_MULTILISTAS_BANNER_5S.zip.
 on:
   push:
     branches:
