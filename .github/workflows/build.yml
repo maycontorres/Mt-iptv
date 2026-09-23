@@ -27,7 +27,7 @@ jobs:
 
       - name: Find and unpack AUREON
         run: |
-          ZIP_FILE="./AUREON_V35_21_BANNER_CORRIGIDO.zip"
+          ZIP_FILE="./AUREON_V35_23_ONACTIVITYRESULT_UNICO.zip"
           if [ -z "$ZIP_FILE" ]; then
             echo "ERROR: AUREON ZIP not found"
             exit 1
