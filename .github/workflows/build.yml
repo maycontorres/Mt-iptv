@@ -27,7 +27,7 @@ jobs:
 
       - name: Find and unpack AUREON
         run: |
-          ZIP_FILE=$(find . -maxdepth 1 -type f -name 'AUREON_V35_19_CINEMA_VLC*.zip' -print -quit)
+          ZIP_FILE=$(find . -maxdepth 1 -type f -name 'ZIP_FILE="./AUREON_V35_21_BANNER_CORRIGIDO.zip" -print -quit)
           if [ -z "$ZIP_FILE" ]; then
             echo "ERROR: AUREON ZIP not found"
             exit 1
